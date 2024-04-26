@@ -7,10 +7,6 @@
       Cadastro de Cursos
     </h2>
 
-    {{-- Formulário de cadastro --}}
-    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-      Cadastro
-    </h4>
 
     <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-700">
       {{-- COMPONENT LIVEWIRE CREATE --}}
