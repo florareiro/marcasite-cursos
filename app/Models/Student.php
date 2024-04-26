@@ -14,20 +14,36 @@ class Student extends Model
     use HasFactory;
 
     protected $fillable = [
-        'section_id',
-        'class_id',
+        'product_id',
         'name',
         'email',
-        'image'
+        'password',
+        'cpf',
+        'address',
+        'tel',
+        'cel',
+        'company',
+        'subs_type',
+        'subs_status'
+    ];
+  /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 
-    public function section()
-    {
-        return $this->belongsTo(Section::class);
-    }
-
-    public function class()
-    {
-        return $this->belongsTo(Classes::class);
-    }
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+   
 }

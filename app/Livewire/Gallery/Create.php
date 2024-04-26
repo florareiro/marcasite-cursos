@@ -13,19 +13,29 @@ use Livewire\Attributes\Computed;
 
 class Create extends Component
 {
-
     use WithFileUploads;
 
-    #[Rule('required|min:3', message: 'Nome do produto é obrigatório.')]
-    public string $product;
+    public string $name = '';
+    public string $desc = '';
+    public $price = '';
+    public $startDate = '';
+    public string $finalDate = '';
+    public $subsMax = '';
+    public $file; 
 
-    #[Rule('required', message: 'Valor é obrigatório.')]
-    public string $price;
-
-    /**@var TemporaryUploadedFile|mixed $image
-    */
-    #[Rule('required|max:1024', message: 'Image obrigatória ou o tamanho é maior que 1024MB.')]
-    public $image;
+    protected function rules()
+    {
+            return [
+                'name' => ['required', 'min:3', 'max:300'],
+                'desc' => ['nullable', 'min:3', 'max:2000'],
+                'price' => ['nullable', 'numeric'],
+                'startDate' => ['nullable', 'date'],
+                'finalDate' => ['nullable', 'date'],
+                'subsMax' => ['nullable', 'numeric'],
+                'file' => ['nullable', 'file', 'mimes:pdf,doc, docx', 'max:2048'],
+            ];
+        
+    }
 
     public function render()
     {
@@ -34,15 +44,24 @@ class Create extends Component
 
     public function save()
     {
-        sleep(3);
         $this->validate();
-        Product::query()->create([
-            'product'   => $this->product,
-            'price'     => $this->price,
-            'image'     => Str::replaceFirst('public/', '', $this->image->store('public/products'))
-        ]);
 
-        $this->reset('product', 'price', 'image');
+        $startDate = $this->startDate ? date('Y-m-d', strtotime($this->startDate)) : null;
+        $finalDate = $this->finalDate ? date('Y-m-d', strtotime($this->finalDate)) : null;
+
+        $data = [
+            'name' => $this->name,
+            'desc' => $this->desc,
+            'price' => $this->price,
+            'start_date' => $startDate,
+            'final_date' => $finalDate,
+            'subs_max' => $this->subsMax,
+            'file' => $this->file ? Str::replaceFirst('public/', '', $this->file->store('public/products')) : null,
+        ];
+
+        Product::create($data);
+
+        $this->reset('name', 'desc', 'price', 'startDate', 'finalDate', 'subsMax', 'file');
 
         session()->flash('status', 'Produto cadastrado com sucesso!');
 

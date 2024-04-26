@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Livewire\Attributes\Rule;
 
 class RegisteredUserController extends Controller
 {
@@ -28,6 +29,32 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+
+
+
+     #[Rule('nullable|min:8')]
+     public $cpf = '';
+        
+     #[Rule('nullable')]
+     public $productId = '';
+     
+     #[Rule('nullable|min:8')]
+     public $cel  = '';
+     
+     #[Rule('nullable|min:8')]
+     public $tel  = '';
+     
+     #[Rule('nullable|min:8')]
+     public $company  = '';
+     
+     #[Rule('nullable|min:8')]
+     public $subsType  = '';
+     
+     #[Rule('nullable')]
+     public string $address = '';
+   
+
+ 
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
@@ -40,6 +67,13 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'cpf'  => $this->cpf,
+            'address'  => $this->address,
+            'tel'  => $this->tel,
+            'cel'  => $this->cel,
+            'company'  => $this->company,
+            'subs_type'  => $this->subsType,
+
         ]);
 
         event(new Registered($user));
