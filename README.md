@@ -1,6 +1,6 @@
 ## Marca Site Cursos
 
-### Instalar dependencias php
+### Instalar dependencias
 
     composer install
     npm install
