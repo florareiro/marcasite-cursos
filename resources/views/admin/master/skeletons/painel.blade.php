@@ -2,7 +2,7 @@
 
     <div class="h-16 bg-gray-300 p-4 mb-6 rounded-lg dark:bg-gray-700 max-w-full mb-2.5 mx-auto"></div>
 
-    <div class="grid grid-cols-2 mb-6 gap-6 sm:grid-cols-4 md:grid-cols-2 xl:grid-cols-4">
+    <div class="grid grid-cols-2 mb-6 gap-6 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
         <div class="space-y-4 rounded-2xl bg-white/5 p-2">
             <div class="h-16 rounded-lg bg-rose-100/10"></div>
             <div class="space-y-3">

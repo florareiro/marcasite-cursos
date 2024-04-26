@@ -24,9 +24,9 @@
             <table class="w-full whitespace-no-wrap">
                 <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th class="px-4 py-3">Produto</th>
+                        <th class="px-4 py-3">Curso</th>
                         <th class="px-4 py-3">Valor</th>
-                        <th class="px-4 py-3">Data</th>
+                        <th class="px-4 py-3">Arquivo</th>
                         <th class="px-4 py-3">Ações</th>
                     </tr>
                 </thead>
@@ -34,7 +34,7 @@
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                     <label class="block mb-2 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">
-                            Produtos
+                            Cursos
                         </span>
 
                         {{-- SEARCH PRODUCTS --}}
@@ -57,31 +57,35 @@
                                 <div>
                                     <p class="font-semibold">
                                         <a href="#" data-modal-target="{{$product->id}}-modal" data-modal-toggle="{{$product->id}}-modal">
-                                            {{$product->product}}
+                                            {{$product->name}}
                                         </a>
                                     </p>
-                                    <p class="text-xs text-gray-600 dark:text-gray-400">
+                                    {{-- <p class="text-xs text-gray-600 dark:text-gray-400">
                                         {{date('d-m-Y', strtotime($product->created_at))}}
-                                    </p>
+                                    </p> --}}
+                                    {{-- <p class="text-xs text-gray-600 dark:text-gray-400">
+                                        {{$product->name}}
+                                    </p> --}}
                                 </div>
                             </td>
 
                             {{-- DETAILS PRICE FORMAT PRODUCT --}}
                             <td class="px-4 py-3 text-sm">
-                                R$ {{number_format($product->price, 2, '.', ',')}}
+                                R$ {{($product->price)}}
                             </td>
 
                             {{-- DETAILS IMAGE PRODUCT --}}
                             <td class="px-4 py-3 text-sm">
-                                <div class="relative hidden w-16 h-16 mr-3 rounded-full md:block">
-                                    @if(\Illuminate\Support\Facades\Storage::disk('public')->exists($product->image))
-                                        <img class="object-cover w-full h-full rounded-md" src="/storage/{{$product->image}}" alt=""
-                                             width="180px" loading="lazy"/>
+                                    <div  class="relative  w-16 h-16 mr-3  flex items-center justify-center">
+                                        @if($product->file)
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13" />
+                                          </svg>
+                                      
                                     @else
-                                        <img class="object-cover w-full h-full rounded-full" src="/storage/default.jpg" alt="" loading="lazy"/>
+                                       <h2>sem material</h2>
                                     @endif
-                                    <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                </div>
+
                             </td>
 
                             {{-- DETAILS ACTIONS PRODUCT --}}
@@ -102,7 +106,7 @@
                                     </div>
 
                                     {{-- DELETE PRODUCT --}}
-                                    <a class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Delete"
+                                    <a class="flex cursor-pointer items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Delete"
                                             wire:confirm="Deseja relamente deletar o produto '{{$product->product}}'"
                                             wire:click="delete({{$product->id}})"
                                             wire:loading.attr="disabled">
@@ -133,7 +137,10 @@
                                     </div>
                                     <!-- Modal body -->
                                     <div class="p-6 space-y-6">
-                                         <img class="max-w-full rounded-lg" src="/storage/{{$product->image}}" alt="{{$product->product}}"/>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13" />
+                                          </svg>
+                                          {{$product->name}}"/>
                                     </div>
                                     <!-- Modal footer -->
                                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
@@ -144,7 +151,7 @@
 
                                         {{-- EDIT PRODUCT --}}
                                         <a href="{{route("gallerys.edit", $product->id)}}" data-modal-hide="medium-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-                                            Editar o produto {{$product->product}}
+                                            Editar o produto {{$product->name}}
                                         </a>
                                     </div>
                                 </div>

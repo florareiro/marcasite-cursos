@@ -23,7 +23,7 @@
 
     {{-- WIRE NAME --}}
     <label class="block text-sm">
-        <span class="text-gray-700 dark:text-gray-400">Name</span>
+        <span class="text-gray-700 dark:text-gray-400">Nome</span>
         <input wire:model.live="form.name" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                placeholder="Informe seu nome"/>
         <div class="text-red-500">
@@ -42,84 +42,107 @@
     </label>
 
 
-
-        {{-- IMAGE --}}
-        <label for="prd-img" class="mt-4 block text-sm">
-            <span class="text-gray-700 dark:text-gray-400">Image</span>
-
-
-            <div x-data="{ uploading: false, progress: 0}"
-                 x-on:livewire-upload-start="uploading = true"
-                 x-on:livewire-upload-finish="uploading = false"
-                 x-on:livewire-upload-error="uploading = false"
-                 x-on:livewire-upload-progress="progress = $event.detail.progress">
-
-                {{-- INPUT IMAGE --}}
-                <div class="flex justify-center align-middle mt-1">
-
-                    @if($form->image)
-                        <div class="flex justify-between text-sm mr-3">
-                            <img class="object-cover rounded-full" src="{{$form->image->temporaryUrl()}}" alt="" width="50"/>
-                        </div>
-                    @endif
-
-                    <input class="lock w-full mt-1 text-sm dark:text-gray-800 dark:border-gray-600 dark:bg-gray-700 shadow-sm rounded-md focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:focus:shadow-outline-gray dark:file:text-gray-400"
-                           wire:model.live="form.image"
-                           type="file"
-                           id="prd-img">
-                </div>
+    {{-- WIRE CPF --}}
+    <label class="mt-4 block text-sm">
+        <span class="text-gray-700 dark:text-gray-400">CPF</span>
+        <input wire:model.live="form.cpf" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+               placeholder="Informe seu e-mail"/>
+        <div class="text-red-500">
+            @error('form.cpf') <span class="error">{{ $message }}</span> @enderror
+        </div>
+    </label>
 
 
-                <div class="m-8" x-show="uploading" class="h-1 w-full bg-neutral-200 dark:bg-neutral-600 bg-red-600">
-                    <div wire:loading.duration.200ms wire:target="form.image" class="text-white text-sm">
-                        baixando image...
-                    </div>
-                    <progress class="h-4 bg-red-600" max="100" x-bind:value="progress" style="width: 100%; background-color: red;"></progress>
-                </div>
-            </div>
+    {{-- WIRE ADDRESS --}}
+    <label class="mt-4 block text-sm">
+        <span class="text-gray-700 dark:text-gray-400">Endereço</span>
+        <input wire:model.live="form.address" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+               placeholder="Informe seu e-mail"/>
+        <div class="text-red-500">
+            @error('form.address') <span class="error">{{ $message }}</span> @enderror
+        </div>
+    </label>
 
-            <div class="text-red-500 mt-2">
-                @error('form.image') <span class="error">{{ $message }}</span> @enderror
-            </div>
-        </label>
 
-    <div class="grid grid-cols-2 gap-4">
-        {{-- DISCIPLINA --}}
+    {{-- WIRE TEL --}}
+    <label class="mt-4 block text-sm">
+        <span class="text-gray-700 dark:text-gray-400">Tel</span>
+        <input wire:model.live="form.tel" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+               placeholder="Informe seu e-mail"/>
+        <div class="text-red-500">
+            @error('form.tel') <span class="error">{{ $message }}</span> @enderror
+        </div>
+    </label>
+    
+    {{-- WIRE TEL --}}
+    <label class="mt-4 block text-sm">
+        <span class="text-gray-700 dark:text-gray-400">Cel</span>
+        <input wire:model.live="form.cel" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+               placeholder="Informe seu e-mail"/>
+        <div class="text-red-500">
+            @error('form.cel') <span class="error">{{ $message }}</span> @enderror
+        </div>
+    </label>
+
+    {{-- WIRE COMPANY --}}
+    <label class="mt-4 block text-sm">
+        <span class="text-gray-700 dark:text-gray-400">Empresa</span>
+        <input wire:model.live="form.company" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+               placeholder="Informe seu e-mail"/>
+        <div class="text-red-500">
+            @error('form.company') <span class="error">{{ $message }}</span> @enderror
+        </div>
+    </label>
+
+    <div class="grid grid-cols-1 gap-4">
+        {{--TYPE--}}
         <label class="block mt-4 text-sm">
         <span class="text-gray-700 dark:text-gray-400">
-          Disciplina
+          Tipo de Usúario
         </span>
-            <select wire:model.live="class_id" id="class_id" class="block w-full mt-1 text-sm dark:text-gray-300 text-gray-800 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                <option value="">Selecione uma disciplina</option>
-                @foreach ($classes as $class)
-                    <option value="{{ $class->id }}">
-                        {{ $class->name }}
-                    </option>
-                @endforeach
+            <select wire:model.live="product_id" id="product_id" class="block w-full mt-1 text-sm dark:text-gray-300 text-gray-800 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                <option value="">Selecione um Tipo de Usuário</option>
+               
+                <option value="Estudante">Estudante</option>
+                <option value="Profissional">Profissional</option>
+                <option value="Associado">Associado</option>
+                
             </select>
             <div class="text-red-500">
-                @error('class_id') <span class="error">{{ $message }}</span> @enderror
+                @error('product_id') <span class="error">{{ $message }}</span> @enderror
             </div>
         </label>
-
-        {{-- TURMA --}}
-        <label class="block mt-4 text-sm">
-        <span class="text-gray-700 dark:text-gray-400">
-          Turma
-        </span>
-            <select wire:model.live="form.section_id" id="section_id" class="block w-full mt-1 text-sm dark:text-gray-300 text-gray-800 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                <option value="">Selecione uma turma</option>
-                @foreach ($sections as $section)
-                    <option value="{{ $section->id }}">
-                        {{ $section->name }} - {{ $section->class->name }}
-                    </option>
-                @endforeach
-            </select>
             <div class="text-red-500">
                 @error('form.section_id') <span class="error">{{ $message }}</span> @enderror
             </div>
         </label>
     </div>
+
+
+
+    <div class="grid grid-cols-1 gap-4">
+        {{--curso--}}
+        <label class="block mt-4 text-sm">
+        <span class="text-gray-700 dark:text-gray-400">
+          Curso
+        </span>
+            <select wire:model.live="product_id" id="product_id" class="block w-full mt-1 text-sm dark:text-gray-300 text-gray-800 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                <option value="">Selecione um Curso</option>
+                @foreach($courses as $course)
+                <option value="{{ $course->id }}">{{ $course->name }}</option>
+                @endforeach
+            </select>
+            <div class="text-red-500">
+                @error('product_id') <span class="error">{{ $message }}</span> @enderror
+            </div>
+        </label>
+            <div class="text-red-500">
+                @error('form.section_id') <span class="error">{{ $message }}</span> @enderror
+            </div>
+        </label>
+    </div>
+
+    
 
     {{-- MESSAGE LOADING --}}
     <div wire:loading wire:target="save" class="w-full py-2.5 px-5 mt-2 mr-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 items-center">

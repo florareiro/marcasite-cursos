@@ -1,6 +1,6 @@
 <div class="mb-4">
-    <div class="grid gap-2 md:grid-cols{{($image ? '-2': '')}}">
-        <form wire:submit="save" enctype="multipart/form-data" wire:submit="save">
+    <div class="grid gap-2 md:grid-cols{{($file ? '-2': '')}}">
+        <form wire:submit.prevent="save" enctype="multipart/form-data">
             @csrf
 
             {{-- MESSAGE STATUS --}}
@@ -26,13 +26,29 @@
             <div>
                 <div class="relative">
                     <input type="text" id="floating_outlined" class="block px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
-                           wire:model.live="product"
-                           name="product"/>
+                           wire:model.live="name"
+                           name="name"/>
                     <label for="small_outlined" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-3 scale-75 top-1 z-10 origin-[0] bg-white dark:bg-gray-700 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-3 left-1">
-                        Nome do produto
+                        Nome do Curso
                     </label>
                 </div>
-                @error('product')
+                @error('name')
+                    <p id="outlined_success_help" class="mt-2 text-xs text-red-600 dark:text-red-400">
+                        <span class="font-medium">Atenção! </span> {{ $message }}</p>
+                @enderror
+            </div>
+            
+            {{-- DESC --}}
+            <div>
+                <div class="relative mt-3">
+                    <input type="text" id="floating_outlined" class="block px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
+                           wire:model.live="desc"
+                           name="desc"/>
+                    <label for="small_outlined" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-3 scale-75 top-1 z-10 origin-[0] bg-white dark:bg-gray-700 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-3 left-1">
+                        Descrição do Curso
+                    </label>
+                </div>
+                @error('desc')
                     <p id="outlined_success_help" class="mt-2 text-xs text-red-600 dark:text-red-400">
                         <span class="font-medium">Atenção! </span> {{ $message }}</p>
                 @enderror
@@ -55,13 +71,61 @@
                 @enderror
             </div>
 
-
-            {{-- IMAGE --}}
-            <label for="prd-img" class="mt-4 block text-sm">
-                <div wire:loading wire:target="image" class="w-full min-w-0 p-2 mb-2 text-white text-sm bg-purple-600 rounded-lg shadow-xs">
-                    baixando image...
+            {{-- max subs --}}
+            <div class="mt-3">
+                <div class="relative">
+                    <input type="text" id="floating_outlined" class="block px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
+                           wire:model.live="subsMax"
+                           name="subsMax"/>
+                    <label for="floating_outlined" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-1 z-10 origin-[0] bg-transparent px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-4 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                      Quantidade de Vagas
+                    </label>
                 </div>
-                <span class="text-gray-700 dark:text-gray-400">Image produto</span>
+                @error('subsMax')
+                <p id="outlined_success_help" class="mt-2 text-xs text-red-600 dark:text-red-400">
+                    <span class="font-medium">Atenção! </span> {{ $message }}</p>
+                @enderror
+            </div>
+            
+            {{-- START DATE  --}}
+            <div class="mt-3">
+                <div class="relative">
+                    <input type="date" id="floating_outlined" class="block px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
+                           wire:model.live="startDate"
+                           name="startDate"/>
+                    <label for="floating_outlined" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-1 z-10 origin-[0] bg-transparent px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-4 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                      Data de Início
+                    </label>
+                </div>
+                @error('startDate')
+                <p id="outlined_success_help" class="mt-2 text-xs text-red-600 dark:text-red-400">
+                    <span class="font-medium">Atenção! </span> {{ $message }}</p>
+                @enderror
+            </div>
+            
+            {{-- FINAL DATE  --}}
+            <div class="mt-3">
+                <div class="relative">
+                    <input type="date" id="floating_outlined" class="block px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "
+                           wire:model.live="finalDate"
+                           name="finalDate"/>
+                    <label for="floating_outlined" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-1 z-10 origin-[0] bg-transparent px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-4 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                      Data de Encerramento
+                    </label>
+                </div>
+                @error('finalDate')
+                <p id="outlined_success_help" class="mt-2 text-xs text-red-600 dark:text-red-400">
+                    <span class="font-medium">Atenção! </span> {{ $message }}</p>
+                @enderror
+            </div>
+
+
+            {{-- file --}}
+            <label for="prd-img" class="mt-4 block text-sm">
+                <div wire:loading wire:target="file" class="w-full min-w-0 p-2 mb-2 text-white text-sm bg-purple-600 rounded-lg shadow-xs">
+                    baixando arquivo...
+                </div>
+                <span class="text-gray-700 dark:text-gray-400">Material</span>
 
 
                 <div x-data="{ uploading: false, progress: 0}"
@@ -72,7 +136,7 @@
 
                     {{-- INPUT IMAGE --}}
                     <input class="block w-full mt-1 border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:focus:shadow-outline-gray dark:file:text-gray-400"
-                           wire:model.live="image" type="file" id="image" name="image">
+                           wire:model.live="file" type="file" id="file" name="file">
 
                     <div class="m-8" x-show="uploading" class="h-1 w-full bg-neutral-200 dark:bg-neutral-600 bg-red-600">
                         <progress class="h-4 bg-red-600" max="100" x-bind:value="progress" style="width: 100%"></progress>
@@ -81,7 +145,7 @@
                 </div>
 
                 <div class="text-red-500 mt-2">
-                    @error('image') <span class="error">{{ $message }}</span> @enderror
+                    @error('file') <span class="error">{{ $message }}</span> @enderror
                 </div>
             </label>
 
@@ -95,16 +159,13 @@
             </div>
 
             {{-- SUBMIT --}}
-            <div class="flex justify-between mt-4 text-sm">
+            <div class="flex justify-between mt-12 text-sm">
                 <a data-tooltip-target="tooltip-cancel" data-tooltip-placement="top" href="{{ route('gallerys.index') }}" class="flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                     <span>Cancelar</span>
                     <svg class="w-4 h-4 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.0007 10.5865L16.9504 5.63672L18.3646 7.05093L13.4149 12.0007L18.3646 16.9504L16.9504 18.3646L12.0007 13.4149L7.05093 18.3646L5.63672 16.9504L10.5865 12.0007L5.63672 7.05093L7.05093 5.63672L12.0007 10.5865Z"></path></svg>
                 </a>
 
 
-                <button wire:click="$refresh">Refresh</button>
-                <button wire:click="$parent.removePost({{ 9 }})">Remove</button>
-                <button wire:click="$set('product', 'carro')">Reset Search</button>
 
 
                 <button data-popover-target="popover-save" type="submit" class="flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
@@ -117,12 +178,15 @@
 
         </form>
 
-        @if($image)
-            <div class="max-w-full min-w-0 p-2 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                <img class="rounded-lg" src="{{$image->temporaryUrl()}}" alt="" width="300"/>
-            </div>
-        @endif
-
+        @if(is_object($file))
+    <div class="max-w-full min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+        <img class="max-w-full rounded-lg" src="{{ asset('images/pdf_icon.png') }}" alt="PDF Icon" width="200"/>
+    </div>
+    @else
+        <div class="max-w-full min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <img class="max-w-full rounded-lg" src="{{ asset('storage/' . $file) }}" alt="" width="200"/>
+        </div>
+    @endif
 
 
     </div>
